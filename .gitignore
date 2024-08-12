@@ -163,3 +163,5 @@ cython_debug/
 
 # Ignore artifacts directory
 artifacts/
+dvc.lock
+.dvcignore

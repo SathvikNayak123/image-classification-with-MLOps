@@ -1,7 +1,7 @@
 import tensorflow as tf
 from pathlib import Path
-from src.cnnClassifier.entity.config_entity import EvaluationConfig
-from src.cnnClassifier.utils.common import save_json
+from cnnClassifier.entity.config_entity import EvaluationConfig
+from cnnClassifier.utils.common import save_json
 import mlflow
 import mlflow.keras
 from mlflow.models.signature import infer_signature
