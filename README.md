@@ -17,15 +17,15 @@ This project focuses on detecting chest cancer from medical images using deep le
 ## MLOps Tools and Techniques
 
 - **MLflow**: Used for tracking experiments and hyperparameter tuning.
-  ![Hyperparameter Tuning with MLflow](static\mlflow.png)
+  ![Hyperparameter Tuning with MLflow](static/mlflow.png)
 
 - **DAGsHub**: Visualized data pipeline for streamlined data processing and management.
-  ![Data Pipeline Display with DAGsHub](static\dagshub.png)
+  ![Data Pipeline Display with DAGsHub](static/dagshub.png)
 
 - **DVC (Data Version Control)**: Implemented for data versioning to ensure reproducibility.
 
 - **Flask Application**: Built a web app to provide an interface for users to upload images and receive predictions.
-  ![Flask App Interface](static\flask_app.png)
+  ![Flask App Interface](static/flask_app.png)
 
 - **Docker**: Dockerized the application for consistent deployment across environments.
 
