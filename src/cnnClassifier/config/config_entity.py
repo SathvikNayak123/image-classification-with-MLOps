@@ -1,7 +1,7 @@
 import os
 from cnnClassifier.constants import *
 from cnnClassifier.utils.common import read_yaml, create_directories
-from cnnClassifier.entity.config_entity import (DataIngestionConfig,
+from cnnClassifier.config.artifact_entity import (DataIngestionConfig,
                                                     PrepareBaseModelConfig,
                                                     TrainingConfig,
                                                     EvaluationConfig
@@ -24,7 +24,6 @@ class ConfigurationManager:
 
         data_ingestion_config = DataIngestionConfig(
             root_dir=config.root_dir,
-            source_URL=config.source_URL,
             local_data_file=config.local_data_file,
             unzip_dir=config.unzip_dir 
         )

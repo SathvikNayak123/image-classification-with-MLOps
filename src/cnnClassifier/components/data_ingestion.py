@@ -3,24 +3,31 @@ import zipfile
 import gdown
 from cnnClassifier import logger
 from cnnClassifier.utils.common import get_size
-from cnnClassifier.config.configuration import DataIngestionConfig
+from cnnClassifier.config.config_entity import DataIngestionConfig
+from pymongo import MongoClient
+import certifi
+import gridfs
+from bson import ObjectId
 
 class DataIngestion:
-    def __init__(self, config: DataIngestionConfig):
+    def __init__(self, mongoURL, fileID, config: DataIngestionConfig):
         self.config = config
+        self.mongoURL = mongoURL
+        self.fileID = fileID
+        self.mongo_client = MongoClient(mongoURL, tlsCAFile=certifi.where())
+        self.fs = gridfs.GridFS(self.mongo_client["ConcerMLOps"])  # Specify the database with GridFS
     
-    def download_file(self)-> str:
-        try: 
-            dataset_url = self.config.source_URL
-            zip_download_dir = self.config.local_data_file
-            os.makedirs("artifacts/data_ingestion", exist_ok=True)
-            logger.info(f"Downloading data from {dataset_url} into file {zip_download_dir}")
-
-            file_id = dataset_url.split("/")[-2]
-            prefix = 'https://drive.google.com/uc?/export=download&id='
-            gdown.download(prefix+file_id,zip_download_dir)
-
-            logger.info(f"Downloaded data from {dataset_url} into file {zip_download_dir}")
+    def download_file_from_mongo(self) -> str:
+        try:
+            # Retrieve file from MongoDB GridFS by file_id
+            file_data = self.fs.get(ObjectId(self.fileID)).read()
+            with open(self.config.local_data_file, "wb") as file:
+                file.write(file_data)
+            
+            logger.info(f"File retrieved from MongoDB and saved to {self.config.local_data_file}")
+            return self.config.local_data_file
+        except Exception as e:
+            raise e
 
         except Exception as e:
             raise e
@@ -30,3 +37,4 @@ class DataIngestion:
         os.makedirs(unzip_path, exist_ok=True)
         with zipfile.ZipFile(self.config.local_data_file, 'r') as zip_ref:
             zip_ref.extractall(unzip_path)
+        logger.info(f"Extracted {self.config.local_data_file} to {unzip_path}")

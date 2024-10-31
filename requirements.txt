@@ -17,4 +17,6 @@ types-PyYAML
 scipy
 Flask
 Flask-Cors
+pymongo[srv]
+pymongo
 -e .

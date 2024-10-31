@@ -1,6 +1,6 @@
 from cnnClassifier.components.eval_mlflow import Evaluation
 from cnnClassifier import logger
-from cnnClassifier.config.configuration import ConfigurationManager
+from cnnClassifier.config.config_entity import ConfigurationManager
 
 
 STAGE_NAME="Model evaluation "

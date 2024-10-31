@@ -5,7 +5,7 @@ from zipfile import ZipFile
 import tensorflow as tf
 import time
 
-from cnnClassifier.entity.config_entity import TrainingConfig
+from cnnClassifier.config.artifact_entity import TrainingConfig
 
 class Training:
     def __init__(self, config: TrainingConfig):
