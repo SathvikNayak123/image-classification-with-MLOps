@@ -1,47 +1,25 @@
-from src.cnnClassifier.pipeline.stage03_training import TrainModelPipeline
-from cnnClassifier.pipeline.stage04_evalaution import EvaluateModelPipeline
+from src.cnnClassifier.pipeline.training_pipeline import TrainingPipeline
 from src.cnnClassifier import logger
-from src.cnnClassifier.pipeline.stage01_ingestion import DataIngestionPipeline
-from src.cnnClassifier.pipeline.stage02_prepare_base_model import BaseModelPipeline
 
-STAGE_NAME="Data Ingestion"
-try:
-    logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
-    obj = DataIngestionPipeline()
-    obj.main()
-    logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
-except Exception as e:
-    logger.exception(e)
-    raise e
 
-STAGE_NAME="Preparing base model"
-try:
-    logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
-    obj = BaseModelPipeline()
-    obj.main()
-    logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
-except Exception as e:
-    logger.exception(e)
-    raise e
-
-STAGE_NAME="Training model"
 if __name__ == '__main__':
+    train = TrainingPipeline()
     try:
-        logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
-        obj = TrainModelPipeline()
-        obj.main()
-        logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
-    except Exception as e:
-        logger.exception(e)
-        raise e
-    
-STAGE_NAME="Evaluating model"
-if __name__ == '__main__':
-    try:
-        logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
-        obj = EvaluateModelPipeline()
-        obj.main()
-        logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
+        logger.info(f"\n>>>>>> Data Ingestion started <<<<<<\n")
+        train.DataIngestionPipeline()
+        logger.info(f"\n>>>>>> Data Ingestion completed <<<<<<\n")
+
+        logger.info(f"\n>>>>>> Preparing base model started <<<<<<\n")
+        train.Model_Prep()
+        logger.info(f"\n>>>>>> Preparing base model completed <<<<<<\n")
+
+        logger.info(f"\n>>>>>> Training model started <<<<<<\n")
+        train.TrainTopLayers()
+        logger.info(f"\n>>>>>> Training model completed <<<<<<\n")
+
+        logger.info(f"\n>>>>>> Model evaluation started <<<<<<\n")
+        train.MLFlow_Eval()
+        logger.info(f"\n>>>>>> Model evaluation completed <<<<<<\n")
     except Exception as e:
         logger.exception(e)
         raise e

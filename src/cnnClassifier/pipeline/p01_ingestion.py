@@ -3,10 +3,7 @@ from cnnClassifier.components.data_ingestion import DataIngestion
 from cnnClassifier import logger
 import os
 from dotenv import load_dotenv
-
 load_dotenv()
-
-STAGE_NAME="Data Ingestion"
 
 class DataIngestionPipeline:
     def __init__(self):
@@ -23,10 +20,10 @@ class DataIngestionPipeline:
 
 if __name__ == '__main__':
     try:
-        logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
+        logger.info(f"\n>>>>>> Data Ingestion started <<<<<<\n")
         obj = DataIngestionPipeline()
         obj.main()
-        logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
+        logger.info(f"\n>>>>>> Data Ingestion completed <<<<<<\n")
     except Exception as e:
         logger.exception(e)
         raise e

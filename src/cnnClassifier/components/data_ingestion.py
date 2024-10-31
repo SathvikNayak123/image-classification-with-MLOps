@@ -15,12 +15,12 @@ class DataIngestion:
         self.mongoURL = mongoURL
         self.fileID = fileID
         self.mongo_client = MongoClient(mongoURL, tlsCAFile=certifi.where())
-        self.fs = gridfs.GridFS(self.mongo_client["ConcerMLOps"])  # Specify the database with GridFS
+        self.fs = gridfs.GridFS(self.mongo_client["CancerMLOps"])  # Specify the database with GridFS
     
     def download_file_from_mongo(self) -> str:
         try:
             # Retrieve file from MongoDB GridFS by file_id
-            file_data = self.fs.get(ObjectId(self.fileID)).read()
+            file_data = self.fs.get(ObjectId('6723d6f00bf47e26638ce25b')).read()
             with open(self.config.local_data_file, "wb") as file:
                 file.write(file_data)
             

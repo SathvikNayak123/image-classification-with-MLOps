@@ -14,7 +14,7 @@ class ZipDataHandler:
         try:
             # Establish MongoDB client and GridFS
             self.mongo_client = pymongo.MongoClient(MONGO_DB_URL, tlsCAFile=ca)
-            self.fs = gridfs.GridFS(self.mongo_client["ConcerMLOps"])  # Use the specified database
+            self.fs = gridfs.GridFS(self.mongo_client["CancerMLOps"])  # Use the specified database
         except Exception as e:
             raise e
 

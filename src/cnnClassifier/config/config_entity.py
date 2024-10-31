@@ -53,6 +53,7 @@ class ConfigurationManager:
         prepare_base_model = self.config.prepare_base_model
         params = self.params
         training_data = os.path.join(self.config.data_ingestion.unzip_dir, "cancer-dataset")
+        
         create_directories([
             Path(training.root_dir)
         ])
@@ -62,6 +63,8 @@ class ConfigurationManager:
             trained_model_path=Path(training.trained_model_path),
             updated_base_model_path=Path(prepare_base_model.updated_base_model_path),
             training_data=Path(training_data),
+            params_classes=params.CLASSES,
+            params_learning_rate=params.LEARNING_RATE,
             params_epochs=params.EPOCHS,
             params_batch_size=params.BATCH_SIZE,
             params_is_augmentation=params.AUGMENTATION,
@@ -76,6 +79,7 @@ class ConfigurationManager:
             training_data="artifacts/data_ingestion/cancer-dataset",
             mlflow_uri="https://dagshub.com/SathvikNayak123/cancer-dl.mlflow",
             all_params=self.params,
+            params_classes=self.params.CLASSES,
             params_image_size=self.params.IMAGE_SIZE,
             params_batch_size=self.params.BATCH_SIZE
         )

@@ -1,16 +1,20 @@
 schema: '2.0'
 stages:
   data_ingestion:
-    cmd: python src/cnnClassifier/pipeline/stage01_ingestion.py
+    cmd: python src/cnnClassifier/pipeline/p01_ingestion.py
     deps:
     - path: config/config.yaml
       hash: md5
-      md5: e0b119309ec4caf177de98dd90dc661a
-      size: 580
-    - path: src/cnnClassifier/pipeline/stage01_ingestion.py
+      md5: 09cc6ea2a56c289d9d6d74e8083bc62a
+      size: 480
+    - path: config/params.yaml
       hash: md5
-      md5: 24f4366e07689a18ec6958a37dcaf915
-      size: 876
+      md5: 6b732021c41e3f9c366dafeb9822aaa5
+      size: 168
+    - path: src/cnnClassifier/pipeline/p01_ingestion.py
+      hash: md5
+      md5: 2b86551516a58f7554692790d488fe02
+      size: 1073
     outs:
     - path: artifacts/data_ingestion/cancer-dataset
       hash: md5
@@ -18,15 +22,15 @@ stages:
       size: 65941138
       nfiles: 485
   prepare_base_model:
-    cmd: python src/cnnClassifier/pipeline/stage02_prepare_base_model.py
+    cmd: python src/cnnClassifier/pipeline/p02_prepare_base_model.py
     deps:
     - path: config/config.yaml
       hash: md5
-      md5: e0b119309ec4caf177de98dd90dc661a
-      size: 580
-    - path: src/cnnClassifier/pipeline/stage02_prepare_base_model.py
+      md5: 09cc6ea2a56c289d9d6d74e8083bc62a
+      size: 480
+    - path: src/cnnClassifier/pipeline/p02_prepare_base_model.py
       hash: md5
-      md5: 7e9e9a942bb8c205af6198c5907e6c57
+      md5: f1984e5a3f50289bde7cf5eb23824ef9
       size: 917
     params:
       params.yaml:
@@ -41,11 +45,11 @@ stages:
     outs:
     - path: artifacts/prepare_base_model
       hash: md5
-      md5: 7159acba305ef31d358d9ed3f146f526.dir
-      size: 118053368
+      md5: 2943d9e4b5abd59f9e7dcf2f998a9730.dir
+      size: 118073464
       nfiles: 2
   training:
-    cmd: python src/cnnClassifier/pipeline/stage03_training.py
+    cmd: python src/cnnClassifier/pipeline/p03_training.py
     deps:
     - path: artifacts/data_ingestion/cancer-dataset
       hash: md5
@@ -54,22 +58,22 @@ stages:
       nfiles: 485
     - path: artifacts/prepare_base_model
       hash: md5
-      md5: 7159acba305ef31d358d9ed3f146f526.dir
-      size: 118053368
+      md5: 2943d9e4b5abd59f9e7dcf2f998a9730.dir
+      size: 118073464
       nfiles: 2
     - path: config/config.yaml
       hash: md5
-      md5: e0b119309ec4caf177de98dd90dc661a
-      size: 580
-    - path: src/cnnClassifier/pipeline/stage03_training.py
+      md5: 09cc6ea2a56c289d9d6d74e8083bc62a
+      size: 480
+    - path: src/cnnClassifier/pipeline/p03_training.py
       hash: md5
-      md5: 7ddac870bcaedd8561d18c6c08778ce0
-      size: 857
+      md5: d4a2deb09d42323d035851524fef947c
+      size: 858
     params:
       params.yaml:
         AUGMENTATION: true
         BATCH_SIZE: 16
-        EPOCHS: 20
+        EPOCHS: 10
         IMAGE_SIZE:
         - 224
         - 224
@@ -77,10 +81,10 @@ stages:
     outs:
     - path: artifacts/training/model.h5
       hash: md5
-      md5: 1a16e1f5ef6f389a3358067108ece334
-      size: 59135136
+      md5: 7e92cb9c327401520c2c75d06ae5b762
+      size: 59147416
   evaluation:
-    cmd: python src/cnnClassifier/pipeline/stage04_evalaution.py
+    cmd: python src/cnnClassifier/pipeline/p04_evalaution.py
     deps:
     - path: artifacts/data_ingestion/cancer-dataset
       hash: md5
@@ -89,16 +93,16 @@ stages:
       nfiles: 485
     - path: artifacts/training/model.h5
       hash: md5
-      md5: 1a16e1f5ef6f389a3358067108ece334
-      size: 59135136
+      md5: 7e92cb9c327401520c2c75d06ae5b762
+      size: 59147416
     - path: config/config.yaml
       hash: md5
-      md5: e0b119309ec4caf177de98dd90dc661a
-      size: 580
-    - path: src/cnnClassifier/pipeline/stage04_evalaution.py
+      md5: 09cc6ea2a56c289d9d6d74e8083bc62a
+      size: 480
+    - path: src/cnnClassifier/pipeline/p04_evalaution.py
       hash: md5
-      md5: 84510f906370c62a2571afc0b8475978
-      size: 831
+      md5: 2824a8f8bad473e22ba6737f6f61a400
+      size: 833
     params:
       params.yaml:
         BATCH_SIZE: 16
@@ -109,5 +113,5 @@ stages:
     outs:
     - path: scores.json
       hash: md5
-      md5: dc37e3ce7631dc1307717b6f5220eedb
-      size: 73
+      md5: 8c4c5b1f705a77e258a8c02d46057d98
+      size: 74

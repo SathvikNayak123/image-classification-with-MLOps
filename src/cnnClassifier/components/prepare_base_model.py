@@ -1,9 +1,8 @@
 import os
 from pathlib import Path
-import urllib.request as request
-from zipfile import ZipFile
 import tensorflow as tf
 from cnnClassifier.config.config_entity import PrepareBaseModelConfig
+from tensorflow.keras.layers import Dropout
 
 class PrepareBaseModel:
     def __init__(self, config: PrepareBaseModelConfig):
@@ -19,16 +18,14 @@ class PrepareBaseModel:
 
         self.save_model(path=self.config.base_model_path, model=self.model)
 
-
-    
     @staticmethod
     def _prepare_full_model(model, classes, freeze_all, freeze_till, learning_rate):
         if freeze_all:
             for layer in model.layers:
-                model.trainable = False
-        elif (freeze_till is not None) and (freeze_till > 0):
+                layer.trainable = False
+        elif freeze_till:
             for layer in model.layers[:-freeze_till]:
-                model.trainable = False
+                layer.trainable = False
 
         flatten_in = tf.keras.layers.Flatten()(model.output)
         prediction = tf.keras.layers.Dense(
@@ -42,7 +39,7 @@ class PrepareBaseModel:
         )
 
         full_model.compile(
-            optimizer=tf.keras.optimizers.SGD(learning_rate=learning_rate),
+            tf.keras.optimizers.Adam(learning_rate=learning_rate),
             loss=tf.keras.losses.CategoricalCrossentropy(),
             metrics=["accuracy"]
         )
