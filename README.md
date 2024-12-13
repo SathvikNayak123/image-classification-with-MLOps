@@ -14,6 +14,30 @@ This project focuses on developing an end-to-end multi-class Image Classificatio
   - **Prediction**: Prediction pipeline with **Flask** app that uses trained model for predicting user inputs.
   - **CI/CD** and **Cloud Deployment**: App is deployed on **AWS EC2** instance, ensuring scalability and high availability. The deployment process is automated using **Docker** and **GitHub Actions** for seamless updates and maintenance.
 
+## VGG16 Architecture
+
+- VGG16 is a convolutional neural network (CNN) model trained on ImageNet dataset. The architecture consists of blocks of convolutional layers, followed by max-pooling layers for down-sampling
+![VGG16 architecture](static/vgg16-architecture.width-1200.jpg)
+1. Input Layer: Accepts images of size 224x224x3.
+2. Convolutional Layers:
+  - Block 1: Two 3x3 convolutions (64 filters), followed by a max-pooling layer.
+  - Block 2: Two 3x3 convolutions (128 filters), followed by a max-pooling layer.
+  - Block 3: Three 3x3 convolutions (256 filters), followed by a max-pooling layer.
+  - Block 4: Three 3x3 convolutions (512 filters), followed by a max-pooling layer.
+  - Block 5: Three 3x3 convolutions (512 filters), followed by a max-pooling layer.
+3. Fully Connected Layers: Flattened output is passed to two fully connected layers with 4096 units each, and a final softmax layer with 1000 outputs.
+4. Output Layer: Predicts probabilities for 1000 ImageNet classes.
+
+## VGG16 Fine-Tuning
+
+![VGG16 fine-tuning](static/biology-10-01347-g020.webp)
+1. Imported a pre-trained version of VGG16 from Keras.
+2. Freeze the weights of the initial convolutional layers to preserve the learned low-level features (like edges and textures).
+3. Replace Fully Connected Layers
+4. Re-train the model on the new dataset.
+5. Use techniques like data augmentation and early stopping to improve model generalization and avoid overfitting.
+
+
 ## MLOps Tools and Techniques
 
 - **MLflow**: Used for tracking experiments and hyperparameter tuning.
